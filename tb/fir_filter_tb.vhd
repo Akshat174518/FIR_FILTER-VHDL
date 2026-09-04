@@ -1,21 +1,3 @@
--------------------------------------------------------------------------------
--- fir_filter_tb.vhd
---
--- Self-checking testbench for fir_filter.
---
--- Reads data/stimulus.txt (one decimal integer per line) as the input
--- samples, feeds them to the DUT one per clock cycle, and compares each
--- registered output against the matching line in data/expected_output.txt
--- (both files produced by python/generate_test_vectors.py, which emulates
--- the RTL's fixed-point arithmetic bit-exactly). Reports a running
--- pass/fail count and stops the simulation at the end of the file.
---
--- Run with GHDL, e.g.:
---   ghdl -a --std=08 rtl/fir_filter.vhd tb/fir_filter_tb.vhd
---   ghdl -e --std=08 fir_filter_tb
---   ghdl -r --std=08 fir_filter_tb --wave=wave.ghw
--------------------------------------------------------------------------------
-
 library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
