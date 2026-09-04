@@ -1,0 +1,7 @@
+*.npy
+*.ghw
+*.o
+*.cf
+work-obj*.cf
+__pycache__/
+*.pyc
