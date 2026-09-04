@@ -1,24 +1,3 @@
-"""
-generate_test_vectors.py
-
-Builds a test input signal (two sine tones + a step, quantized to 16-bit
-signed integers) and computes the *bit-exact* expected FIR output by
-emulating the same fixed-point arithmetic the VHDL RTL uses:
-
-    - Q15 coefficients (already quantized by generate_coeffs.py)
-    - 40-bit MAC accumulator
-    - arithmetic right-shift by 15 to rescale
-    - saturate to 16-bit signed
-
-Writes data/stimulus.txt and data/expected_output.txt, one decimal
-integer per line, for the VHDL testbench (tb/fir_filter_tb.vhd) to
-read via std.textio.
-
-Run:
-    python3 generate_coeffs.py          # first, if q_coeffs.npy is missing
-    python3 generate_test_vectors.py
-"""
-
 import numpy as np
 import os
 
@@ -51,7 +30,7 @@ def saturate(v):
 def golden_model(x, coeffs):
     """Bit-exact emulation of the VHDL direct-form FIR (see fir_filter.vhd)."""
     num_taps = len(coeffs)
-    shift_reg = np.zeros(num_taps, dtype=np.int64)  # shift_reg(0..N-1) history
+    shift_reg = np.zeros(num_taps, dtype=np.int64)  # shift_reg(0..N-1) 
     y = np.zeros(len(x), dtype=np.int64)
 
     for n in range(len(x)):
@@ -60,7 +39,7 @@ def golden_model(x, coeffs):
         taps_now[1:] = shift_reg[:num_taps - 1]
 
         acc = int(np.sum(taps_now.astype(np.int64) * coeffs.astype(np.int64)))
-        rescaled = acc >> COEFF_SHIFT   # arithmetic shift, matches VHDL shift_right on signed
+        rescaled = acc >> COEFF_SHIFT   
         y[n] = saturate(rescaled)
 
         shift_reg = taps_now
