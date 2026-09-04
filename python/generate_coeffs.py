@@ -1,14 +1,3 @@
-"""
-generate_coeffs.py
-
-Designs a 16-tap low-pass FIR filter (Hamming window), quantizes the
-coefficients to Q15 fixed-point (16-bit signed, scale = 32768), and
-prints them ready to paste into rtl/fir_filter.vhd.
-
-Run:
-    python3 generate_coeffs.py
-"""
-
 import numpy as np
 from scipy.signal import firwin
 
